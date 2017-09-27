@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Search</title>
+  <!-- CSS  -->
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/MaterialIcons.css" rel="stylesheet">
+</head>
+<style>
+  .input-field input[type=text]{
+    width: calc(80% - 4rem);
+  }
+</style>
+
+<script>
+function Submit(){
+  $.ajax({
+    url: "/search",
+    data: {Kind: "all", Name: $('input#value').val()},
+    type:"POST",
+    dataType:'json',
+  }); 
+   document.location.href="/search/index";
+};
+</script>
+<body>
+  <header>
+    <div class="navbar-fixed">
+      <nav class="top-nav" style="background-color: white;">
+        <nav>
+          <div class="nav-wrapper">
+            <form id="sentToBack">
+              <div class="input-field">
+                <input id="value" type="text" required style="margin-left: 10px;">
+                <a class="waves-effect waves-light btn" id="search" style="padding: 0px 25px;" onclick="Submit()"><i class="material-icons left" style="line-height: 40px; margin-right: 10px;"><img src="images/icon/ic_search_white.png"></i>搜尋</a>
+              </div>
+            </form>
+          </div>
+        </nav>
+      </nav>
+    </div>
+  </header>
+
+  <!--  Scripts-->
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+</body>
+</html>

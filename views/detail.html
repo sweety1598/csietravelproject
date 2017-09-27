@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>景點詳細資訊</title>
+  <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+  <link rel="stylesheet" href="css/detailstyle.css">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/MaterialIcons.css" rel="stylesheet">
+</head>
+<style>
+  .page-title{
+    font-size: 20px;
+    font-weight:bold;
+  }
+  p{
+  	padding: 5px 0px;
+  }
+</style>
+
+<script>
+function Search(){
+  $.ajax({
+    url: "/search/a",
+    type:"POST",
+    dataType:'json',
+
+    success: function(response){
+      //alert("SUCCESS!!!");
+      console.log(JSON.stringify(response));
+      Search2(response);
+    },
+    error: function() {
+      alert("ERROR!!!");
+    }
+
+  });    
+};
+
+function Search2(data){
+  $("#title").html(data[0].Name);
+  $("#address").html("地址&nbsp;&nbsp;&nbsp;"+data[0].Address);
+  $("#telephone").html("電話&nbsp;&nbsp;&nbsp;"+data[0].Tel);
+  $("#time").html("時間&nbsp;&nbsp;&nbsp;"+data[0].Opentime);
+  $("#parking").html("停車資訊&nbsp;&nbsp;&nbsp;"+data[0].Parkinginfo);
+  $("#goto").html("如何前往&nbsp;&nbsp;&nbsp;"+data[0].Travellinginfo);
+  $("#introduction").html(data[0].Toldescribe);
+}
+</script>
+<body onload="Search()">
+  <header>
+    <div class="navbar-fixed">
+      <nav class="top-nav">
+        <div class="nav-wrapper">
+          <a onclick="history.back()" data-activates="slide-out" class="button-collapse top-nav full hide-on-large-only" style="margin: -6px 18px;"><i class="material-icons"><img src="images/icon/ic_keyboard_backspace.png"></i></a>
+          <a class="page-title" id="title">文化大學</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <img src="http://crj.pccu.edu.tw/ezfiles/30/1030/sys_1030_5173768_26106.jpg"  alt="文化大學" style="height: 100%; width: 100%" />
+	<div class="panel-group wrap" id="accordion">
+	  <div class="panel">
+			<div class="panel-heading">
+			  <h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#" href="#one">基本資料</a>
+			  </h4>
+			</div>
+
+			<div id="one" class="panel-collapse collapse">
+			  <div class="panel-body">
+					<p id="address">地址</p><p id="telephone">電話</p><p id="time">時間</p>
+			  </div>
+			</div>
+	  </div>
+	    
+		<div class="panel">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#" href="#two">交通</a>
+				</h4>
+			</div>
+
+			<div id="two" class="panel-collapse collapse">
+				<div class="panel-body">
+					<p id="parking">停車資訊</p><p id="goto">如何前往</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#" href="#three">簡介</a>
+				</h4>
+		  </div>
+		  
+		  <div id="three" class="panel-collapse collapse">
+				<div class="panel-body">
+					<p id="introduction">簡介</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+	<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		  $('.collapse.in').prev('.panel-heading').addClass('active');
+		  $('#accordion, #bs-collapse')
+		    .on('show.bs.collapse', function(a) {
+		      $(a.target).prev('.panel-heading').addClass('active');
+		    })
+		    .on('hide.bs.collapse', function(a) {
+		      $(a.target).prev('.panel-heading').removeClass('active');
+		    });
+		});
+	</script>
+</body>
+</html>

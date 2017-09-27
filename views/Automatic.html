@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>自動規劃行程</title>
+  <!-- CSS  -->
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/MaterialIcons.css" rel="stylesheet">
+</head>
+<style>
+  @import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+  *{
+      font-family: 'Noto Sans TC';
+  }
+  .container{
+    margin: 0px;
+  }
+  .page-title{
+    font-size: 20px;
+    font-weight:bold;
+  }
+  #btn2{
+    text-decoration: none;
+    color: #5d5d5d;
+    background-color: #fff;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
+    cursor: pointer;
+    border: 1px #ccc solid;
+    margin-bottom: 25px;
+    padding: 0px 15px 0px 20px;
+  }
+  #btn3{
+    text-decoration: none;
+    color: #5d5d5d;
+    background-color: #fff;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
+    cursor: pointer;
+    border: 1px #ccc solid;
+    margin-bottom: 25px;
+    padding: 0px 15px 0px 20px;
+  }
+  i.right {
+    margin-left: 5px;
+  }
+  .dropdown-content li > a, .dropdown-content li > span {
+    font-size: 16px;
+    color: #565858;
+    display: block;
+    line-height: 22px;
+    padding: 14px 16px;
+  }
+</style>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+<script>
+$(document).ready(function(){
+
+  $("#one").fadeIn(3000);
+
+  $("#gotwo").click(function(){
+    $("#one").fadeOut(500, function(){
+      $("#two").fadeIn(3000);
+    });
+  });
+
+  $("#gothree").click(function(){
+    $("#two").fadeOut(500, function(){
+      $("#three").fadeIn(3000);
+    });
+  });
+
+});
+
+function Plan(){
+  $.ajax({
+    url: "/autoscenic",
+    data: {Place: $("#place").val(), Type: $("#type").val(), Day: $("#day").val()},
+    type:"POST",
+    dataType:'json',
+  });
+
+};
+</script>
+<body>
+  <header>
+    <div class="navbar-fixed">
+      <nav class="top-nav">
+        <div class="nav-wrapper">
+          <a href="#" data-activates="slide-out" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons"><img src="images/icon/ic_menu.png"></i></a>
+          <a class="page-title">自動規劃行程</a>
+          <a href=".." class="top-nav full hide-on-large-only" style="float: right; margin: 0px 18px;"><i class="material-icons"><img src="images/icon/ic_search_white.png"></i></a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m9 l10">
+        <ul id="slide-out" class="side-nav">
+          <li><div class="user-view" style="background-color: #9C9C9C">
+            <a href="#!user"><img class="circle" src="images/user.jpg"></a>
+            <a href="#!name"><span class="white-text name">廖禮志</span></a>
+            <a href="#!email"><span class="white-text email">sweety125499123@gmail.com</span></a>
+          </div></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_today.png"></i>我的行程</a></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_search_gray.png"></i>景點搜尋</a></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_help_outline.png"></i>Q&A</a></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_monetization_on.png"></i>匯率換算</a></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_group.png"></i>團隊旅遊</a></li>
+          <li><div class="divider"></div></li>
+          <!--<li><a class="subheader">Subheader</a></li>-->
+          <li><a class="waves-effect" href="#!"><i class="material-icons"><img src="images/icon/ic_settings.png"></i>設定</a></li>
+          <li><a class="waves-effect" href="#!"><i class="material-icons"><img src="images/icon/ic_info_outline.png"></i>關於我們</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; display: none;" id="one">
+    <h3 style="line-height: 100px;">想去哪?</h3>
+
+    <input id="place" style="width: 70%; font-size:20px; text-align: center; margin-bottom: 25px;"></input><br>
+
+    <a class="waves-effect waves-light btn" id="gotwo">下一步</a>
+  </div>
+
+  <div style="text-align: center; display: none;" id="two">
+    <h3 style="line-height: 100px;">哪種類型?</h3>
+
+    <!--<ul id="dropdown" class="dropdown-content">
+      <li><a href="#!">歷史之旅</a></li>
+      <li><a href="#!">逛街購物</a></li>
+    </ul>
+
+    <a class="btn dropdown-button" href="#!" data-activates="dropdown" id="btn2">請選擇類型<i class="material-icons right">arrow_drop_down</i></a><br>-->
+
+    <select id="type">
+      <option value="history">歷史之旅</option>
+      <option value="shopping">逛街購物</option>
+    </select><br><br>
+
+    <a class="waves-effect waves-light btn" id="gothree">下一步</a>
+  </div>
+
+  <div style="text-align: center; display: none;" id="three">
+    <h3 style="line-height: 100px;">去幾天?</h3>
+
+    <select id="day">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select><br><br>
+
+    <a class="waves-effect waves-light btn" id="finish" onclick="Plan()">開始規劃</a>
+  </div>
+
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red" id="gotop" style="display: none;">
+      <i class="material-icons"><img src="images/icon/ic_arrow_upward.png"></i>
+    </a>
+  </div>
+
+  <!--  Scripts-->
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+</body>
+</html>

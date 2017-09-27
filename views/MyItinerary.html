@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>景點</title>
+  <!-- CSS  -->
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/MaterialIcons.css" rel="stylesheet">
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+</head>
+<style>
+  .container{
+    margin: 0px;
+  }
+  .input-field input[type=search]{
+    width: calc(80% - 4rem);
+  }
+  .page-title{
+    font-size: 20px;
+    font-weight:bold;
+  }
+  .chip{
+    border: 1px groove #b9bdc1;
+    background-color:#b9bdc1;
+    /*padding: 5px;*/
+    border-radius:5px;
+    color: white;
+  }
+  .title{
+    font-weight: bold;
+    font-size: large;
+    padding: 20px 0px 10px 0px;
+  }
+</style>
+<script>
+function Itinerary(){
+  $.ajax({
+    url: "/travel",
+    type:"POST",
+    dataType:'json',
+
+    success: function(response){
+      //console.log(JSON.stringify(response));
+      //alert("SUCCESS!!!");
+      console.log(response)
+      Itinerary2(response);
+    },
+    error: function() {
+      alert("ERROR!!!");
+    }
+
+  });    
+};
+
+function Itinerary2(data){
+  var txt1, txt2;
+
+  for (var i=0; i<data.length; i++){
+    txt1=$("<p/>").addClass('title').text(data[i].TravelName);
+    txt2=$("<font/>").addClass('chip').text(data[i].Start_Date+"-"+data[i].End_Date);
+
+    id=data[i].id
+
+    $('#MyItinerary').append(
+      $('<div/>')
+      .addClass('row')
+      .append(
+        $('<div/>')
+        .addClass('card horizontal')
+        .prepend(
+          $('<div/>')
+          .addClass('card-image')
+          .css('padding','10px')
+          .append(
+            $('<img/>')
+            .attr('src','https://lorempixel.com/100/190/nature/6')
+            .css({"height":"90px","width":"120px"})
+          )
+        )
+        .append(
+          $('<div/>')
+          .addClass('card-stacked')
+          .append(
+            $('<div/>')
+            .addClass('card-content')
+            .append(txt1,txt2)
+        )
+        )
+      )
+    );
+  }
+};
+</script>
+<body onload="Itinerary()" style="background-color: #e3ebf3;">
+  <header>
+    <div class="navbar-fixed">
+      <nav class="top-nav">
+        <div class="nav-wrapper">
+          <a href="#" data-activates="slide-out" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons"><img src="images/icon/ic_menu.png"></i></a>
+          <a class="page-title">我的行程</a>
+          <a href="./search.html" class="top-nav full hide-on-large-only" style="float: right; margin: 0px 18px;"><i class="material-icons"><img src="images/icon/ic_search_white.png"></i></a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m9 l10">
+        <ul id="slide-out" class="side-nav">
+          <li><div class="user-view" style="background-color: #9C9C9C">
+            <a href="#!user"><img class="circle" src="images/user.jpg"></a>
+            <a href="#!name"><span class="white-text name">廖禮志</span></a>
+            <a href="#!email"><span class="white-text email">sweety125499123@gmail.com</span></a>
+          </div></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_today.png"></i>我的行程</a></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_search_gray.png"></i>景點搜尋</a></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_help_outline.png"></i>Q&A</a></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_monetization_on.png"></i>匯率換算</a></li>
+          <li><a href="#!"><i class="material-icons"><img src="images/icon/ic_group.png"></i>團隊旅遊</a></li>
+          <li><div class="divider"></div></li>
+          <!--<li><a class="subheader">Subheader</a></li>-->
+          <li><a class="waves-effect" href="#!"><i class="material-icons"><img src="images/icon/ic_settings.png"></i>設定</a></li>
+          <li><a class="waves-effect" href="#!"><i class="material-icons"><img src="images/icon/ic_info_outline.png"></i>關於我們</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id = "MyItinerary">
+
+  </div>
+
+
+  <br><br><br>
+
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red" id="gotop" style="display: none;">
+      <i class="material-icons"><img src="images/icon/ic_arrow_upward.png"></i>
+    </a>
+  </div>
+
+  <!--  Scripts-->
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+</body>
+</html>
